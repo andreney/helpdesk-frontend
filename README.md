@@ -47,7 +47,7 @@ Em desenvolvimento, as chamadas a `/api` passam pelo proxy do Vite (veja `vite.c
 
 | Variável            | Padrão | Descrição                                  |
 | ------------------- | ------ | ------------------------------------------ |
-| `VITE_API_BASE_URL` | `/api` | URL base da API (sem barra final)          |
+| `VITE_API_BASE_URL` | `/api/v1` | URL base da API (sem barra final)       |
 
 ## Estrutura
 
@@ -73,10 +73,13 @@ Regras de dependência: `features` usam `components`, `services` e `utils`; `com
 
 ## Contrato esperado da API
 
+Rotas relativas a `VITE_API_BASE_URL` (`/api/v1`).
+
 | Método | Rota                       | Uso                                  |
 | ------ | -------------------------- | ------------------------------------ |
 | POST   | `/login`                   | `{ email, password }` → `{ token, user }` |
 | POST   | `/logout`                  | Encerra o token                      |
+| GET    | `/categories`              | `{ data: [{ id, name, description }] }` (só ativas) |
 | GET    | `/tickets`                 | `{ data: [...] }`                    |
 | GET    | `/tickets/:id`             | Detalhe com `comments`               |
 | POST   | `/tickets`                 | `{ category_id, title, description, priority }` |
@@ -94,7 +97,6 @@ Erros de validação (`{ errors: { campo: [msg] } }`) e `{ message }` são exibi
 
 ## Próximos passos
 
-- Carregar categorias da API (hoje o formulário pede o ID numérico).
 - Paginação e filtros no servidor.
 - Testes de componentes (Testing Library) e E2E (Playwright).
 - Migração para TypeScript.

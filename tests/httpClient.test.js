@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { API_BASE_URL } from '@/config/env';
 import { ApiError, extractErrorMessage, request } from '@/services/httpClient';
 import { onSessionExpired } from '@/services/sessionEvents';
 
@@ -60,7 +61,7 @@ describe('request', () => {
 
     await request('/tickets', { method: 'POST', body: { title: 'Olá' } });
 
-    expect(calls[0].url).toBe('/api/tickets');
+    expect(calls[0].url).toBe(`${API_BASE_URL}/tickets`);
     expect(calls[0].init.method).toBe('POST');
     expect(calls[0].init.body).toBe('{"title":"Olá"}');
     expect(calls[0].init.headers.Authorization).toBe('Bearer abc123');

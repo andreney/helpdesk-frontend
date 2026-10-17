@@ -4,6 +4,7 @@ import ErrorMessage from '@/components/ui/ErrorMessage';
 import Modal from '@/components/ui/Modal';
 import { getErrorMessage } from '@/services/httpClient';
 import { PRIORITY, PRIORITY_META, TITLE_MAX_LENGTH } from '../constants';
+import { useCategories } from '../useCategories';
 
 const INITIAL_FORM = { category_id: '', title: '', description: '', priority: PRIORITY.MEDIUM };
 
@@ -11,6 +12,7 @@ export default function CreateTicketModal({ onClose, onCreate }) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const { categories, loading: loadingCategories, error: categoriesError } = useCategories();
   const formId = useId();
   const fieldId = (name) => `${formId}-${name}`;
 
@@ -51,7 +53,7 @@ export default function CreateTicketModal({ onClose, onCreate }) {
       }
     >
       <form id={formId} className="stack" onSubmit={handleSubmit}>
-        <ErrorMessage>{error}</ErrorMessage>
+        <ErrorMessage>{error || categoriesError}</ErrorMessage>
 
         <label htmlFor={fieldId('title')}>
           Título
@@ -67,18 +69,21 @@ export default function CreateTicketModal({ onClose, onCreate }) {
         </label>
 
         <label htmlFor={fieldId('category')}>
-          ID da categoria
-          <input
+          Categoria
+          <select
             id={fieldId('category')}
-            type="number"
-            min="1"
-            placeholder="Ex.: 1"
             value={form.category_id}
             onChange={handleChange('category_id')}
-            aria-describedby={fieldId('category-hint')}
+            disabled={loadingCategories || categories.length === 0}
             required
-          />
-          <small id={fieldId('category-hint')}>Informe o ID de uma categoria cadastrada na API.</small>
+          >
+            <option value="">{loadingCategories ? 'Carregando categorias…' : 'Selecione uma categoria'}</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </label>
 
         <label htmlFor={fieldId('priority')}>

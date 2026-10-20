@@ -1,0 +1,418 @@
+/* Chamados: cards de resumo, filtros e tabela. */
+
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 15px;
+  margin-top: 28px;
+}
+
+.stat-card {
+  position: relative;
+  min-height: 129px;
+  padding: 19px 19px 14px;
+  border: 1px solid #e8eaf0;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 3px 13px -11px #18203e30;
+}
+
+.stat-card > div {
+  padding-right: 44px;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #6a707d;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.stat-card>div>strong {
+  display: block;
+  margin-top: 13px;
+  color: #171b2e;
+  font: 700 29px/1 var(--font-sans);
+  letter-spacing: -.7px;
+}
+
+.stat-card>small {
+  display: block;
+  margin-top: 12px;
+  color: #6d7079;
+  font-size: 12px;
+}
+
+.stat-icon {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  display: grid;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  border-radius: 11px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.stat-indigo {
+  background: #f0efff;
+  color: #5e54df;
+}
+
+.stat-blue {
+  background: #eaf6ff;
+  color: #2b74ab;
+}
+
+.stat-amber {
+  background: #fff5e8;
+  color: #966623;
+}
+
+.stat-green {
+  background: #eaf8f1;
+  color: #287c5a;
+}
+
+.ticket-panel {
+  margin-top: 27px;
+  overflow: hidden;
+  border: 1px solid #e6e8ee;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 3px 14px -12px #18203e33;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 19px 21px;
+  border-bottom: 1px solid #eff0f4;
+}
+
+.panel-head h2 {
+  margin: 0;
+  color: #252a3b;
+  font: 700 14px var(--font-sans);
+}
+
+.panel-head p {
+  margin: 6px 0 0;
+  color: #6a6e78;
+  font-size: 12px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+.search, .select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  border: 1px solid #e8eaf0;
+  border-radius: 9px;
+  background: white;
+}
+
+.search {
+  width: 218px;
+}
+
+.search>span, .select-wrap>span {
+  position: absolute;
+  left: 11px;
+  color: #6a6d77;
+  font-size: 17px;
+  pointer-events: none;
+}
+
+.search input, .select-wrap select {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #646b7c;
+  font-size: 12px;
+}
+
+.search input {
+  padding: 0 9px 0 32px;
+}
+
+.search input::placeholder {
+  color: #696d75;
+}
+
+.select-wrap {
+  width: 146px;
+}
+
+.select-wrap select {
+  padding: 0 8px 0 31px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+
+thead {
+  background: #fafbfc;
+}
+
+th {
+  height: 38px;
+  padding: 0 12px;
+  color: #6b6f77;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+th:first-child {
+  padding-left: 21px;
+}
+
+td {
+  height: 67px;
+  padding: 8px 12px;
+  border-top: 1px solid #f0f1f4;
+  color: #687083;
+  font-size: 12px;
+}
+
+td:first-child {
+  padding-left: 21px;
+}
+
+tbody tr:not(:has(.empty-state)):hover {
+  background: #fafaff;
+}
+
+tbody tr:not(:has(.empty-state)) {
+  cursor: pointer;
+}
+
+.ticket-title, .requester {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ticket-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 10px;
+  background: #f0efff;
+  color: #6157df;
+  font-size: 16px;
+}
+
+.ticket-title strong {
+  display: block;
+  max-width: 270px;
+  overflow: hidden;
+  color: #363c4e;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.ticket-title small {
+  display: block;
+  margin-top: 5px;
+  color: #6a6e76;
+  font-size: 12px;
+}
+
+.ticket-title small i {
+  margin: 0 5px;
+  font-style: normal;
+}
+
+.requester {
+  color: #697082;
+  font-size: 12px;
+}
+
+.date-cell {
+  color: #696e79;
+  font-size: 12px;
+}
+
+.chevron {
+  color: #8a8f99;
+  font-size: 18px;
+}
+
+.empty-cell {
+  height: 150px;
+  text-align: center;
+  color: #6a6f77;
+}
+
+.empty-state {
+  display: flex;
+  min-height: 205px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.empty-state>span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 14px;
+  background: #f2f3f7;
+  color: #696e7a;
+  font-size: 21px;
+}
+
+.empty-state strong {
+  margin-top: 12px;
+  color: #394052;
+  font-size: 13px;
+}
+
+.empty-state p {
+  max-width: 330px;
+  margin: 7px 0 0;
+  color: #696d76;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.empty-state button {
+  margin-top: 13px;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.panel-foot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 13px 21px;
+  border-top: 1px solid #eff0f4;
+  color: #6a6e75;
+  font-size: 12px;
+}
+
+.panel-foot strong {
+  color: #555c6d;
+}
+
+.panel-foot-count + span {
+  margin-left: auto;
+}
+
+@media (max-width:1100px) {
+  .stats {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .panel-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .search {
+    flex: 1;
+  }
+
+  .select-wrap {
+    width: 160px;
+  }
+}
+
+@media (max-width:560px) {
+  .stats {
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .stat-card {
+    min-height: 115px;
+    padding: 15px;
+  }
+
+  .stat-card>div>strong {
+    font-size: 25px;
+  }
+
+  .stat-icon {
+    top: 13px;
+    right: 13px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .panel-head {
+    padding: 16px;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .search, .select-wrap {
+    flex: none;
+    width: 100%;
+    height: 38px;
+  }
+
+  .panel-foot {
+    padding: 12px 15px;
+  }
+}
+
+/* Título do chamado: botão real para navegação por teclado e leitores de tela */
+.ticket-link {
+  display: block;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
+.ticket-link:hover strong {
+  color: var(--color-primary);
+}
+
+.ticket-link:focus-visible {
+  border-radius: 4px;
+}

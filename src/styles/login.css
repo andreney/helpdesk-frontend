@@ -1,0 +1,151 @@
+/* Tela de login. */
+
+
+.login-layout {
+  display: grid;
+  grid-template-columns: 1fr .92fr;
+  min-height: 100vh;
+  background: #fff;
+}
+
+.login-form-side {
+  display: grid;
+  place-items: center;
+  padding: 48px;
+}
+
+.login-box {
+  width: min(100%,410px);
+}
+
+.login-heading {
+  margin: 62px 0 30px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .11em;
+}
+
+.login-heading h1 {
+  margin: 12px 0 8px;
+  font: 700 32px/1.17 var(--font-sans);
+  letter-spacing: -1.15px;
+  color: #171b2e;
+}
+
+.login-heading>p:last-child {
+  margin: 0;
+  color: #696f7e;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.login-footnote {
+  margin: 26px 0 0;
+  text-align: center;
+  color: #6a6e77;
+  font-size: 13px;
+}
+
+.login-art {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 64px 10%;
+  background: var(--color-sidebar);
+  color: white;
+}
+
+.orb {
+  position: absolute;
+  border: 1px solid #ffffff17;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.orb-one {
+  width: 540px;
+  height: 540px;
+  right: -190px;
+  top: -135px;
+}
+
+.orb-two {
+  width: 380px;
+  height: 380px;
+  right: -110px;
+  top: -55px;
+}
+
+.art-copy {
+  position: relative;
+  max-width: 480px;
+  margin-top: 92px;
+}
+
+.art-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 1px solid #ffffff20;
+  border-radius: 17px;
+  background: #ffffff10;
+  color: #c6c3ff;
+  font-size: 30px;
+}
+
+.art-copy h2 {
+  margin: 27px 0 16px;
+  font: 700 38px/1.13 var(--font-sans);
+  letter-spacing: -1.3px;
+}
+
+.art-copy p {
+  max-width: 395px;
+  margin: 0;
+  color: #c6cae0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.art-foot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #c9cbe0;
+  font-size: 13px;
+}
+
+.art-foot i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #36cc91;
+}
+
+@media (max-width:800px) {
+  .login-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .login-form-side {
+    min-height: 100vh;
+    padding: 30px 24px;
+  }
+
+  .login-art {
+    display: none;
+  }
+
+  .login-heading {
+    margin-top: 48px;
+  }
+}

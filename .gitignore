@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+
+# variáveis locais (nunca versionar); mantenha apenas o .env.example
+.env
+.env.*
+!.env.example
+
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json

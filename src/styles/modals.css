@@ -1,7 +1,7 @@
 /* Modal de criação e drawer de detalhes do chamado. */
 
-
-.modal-scrim, .drawer-scrim {
+.modal-scrim,
+.drawer-scrim {
   position: fixed;
   z-index: 50;
   inset: 0;
@@ -15,7 +15,7 @@
 
 .modal {
   display: flex;
-  width: min(100%,540px);
+  width: min(100%, 540px);
   max-height: 92vh;
   flex-direction: column;
   overflow: hidden;
@@ -24,7 +24,8 @@
   box-shadow: 0 24px 80px #11182735;
 }
 
-.modal>header, .drawer>header {
+.modal > header,
+.drawer > header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -32,13 +33,13 @@
   border-bottom: 1px solid #eef0f4;
 }
 
-.modal>header h2 {
+.modal > header h2 {
   margin: 0;
   color: #1f2537;
   font: 700 17px var(--font-sans);
 }
 
-.modal>header p {
+.modal > header p {
   margin: 6px 0 0;
   color: #6a6f7a;
   font-size: 12px;
@@ -49,7 +50,7 @@
   padding: 21px 23px;
 }
 
-.modal>footer {
+.modal > footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
@@ -65,26 +66,26 @@
 
 .drawer {
   display: flex;
-  width: min(100%,550px);
+  width: min(100%, 550px);
   height: 100%;
   flex-direction: column;
   background: white;
   box-shadow: -16px 0 60px #1118272a;
 }
 
-.drawer>header {
+.drawer > header {
   padding: 21px 26px;
 }
 
-.drawer>header p {
+.drawer > header p {
   margin: 0;
   color: var(--color-primary);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
 }
 
-.drawer>header h2 {
+.drawer > header h2 {
   max-width: 430px;
   margin: 8px 0 0;
   color: #252a3b;
@@ -99,7 +100,7 @@
   border-bottom: 1px solid #eef0f4;
 }
 
-.detail-badges>span:last-child {
+.detail-badges > span:last-child {
   margin-left: auto;
   color: #6b6f78;
   font-size: 12px;
@@ -121,13 +122,15 @@
   background: #f7f8fa;
 }
 
-.meta-grid dt, .description h3, .conversation h3 {
+.meta-grid dt,
+.description h3,
+.conversation h3 {
   display: block;
   margin: 0;
   color: #6a6e76;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: .12em;
+  letter-spacing: 0.12em;
 }
 
 .meta-grid dd {
@@ -158,12 +161,12 @@
   background: #f8f7ff;
 }
 
-.next-step>strong {
+.next-step > strong {
   color: #393477;
   font-size: 12px;
 }
 
-.next-step>div {
+.next-step > div {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
@@ -186,7 +189,7 @@
   justify-content: space-between;
 }
 
-.conversation-head>span {
+.conversation-head > span {
   display: grid;
   min-width: 21px;
   height: 21px;
@@ -203,7 +206,7 @@
   margin-top: 14px;
 }
 
-.comment>div {
+.comment > div {
   flex: 1;
   min-width: 0;
   padding: 11px 13px;
@@ -211,13 +214,13 @@
   background: #f7f8fa;
 }
 
-.comment>div>header {
+.comment > div > header {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
 
-.comment>div>header strong {
+.comment > div > header strong {
   color: #495061;
   font-size: 12px;
 }
@@ -279,13 +282,13 @@
   font-size: 18px;
 }
 
-.comment-form>small {
+.comment-form > small {
   grid-column: 1/-1;
   color: #6b6f76;
   font-size: 12px;
 }
 
-@media (max-width:560px) {
+@media (max-width: 560px) {
   .modal-scrim {
     align-items: flex-end;
     padding: 0;
@@ -300,7 +303,8 @@
     padding: 18px;
   }
 
-  .modal>header, .modal>footer {
+  .modal > header,
+  .modal > footer {
     padding: 15px 18px;
   }
 
@@ -308,7 +312,8 @@
     width: 100%;
   }
 
-  .drawer>header, .detail-badges {
+  .drawer > header,
+  .detail-badges {
     padding-right: 18px;
     padding-left: 18px;
   }

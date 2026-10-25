@@ -18,10 +18,24 @@ export default function AppShell({ navItems, activeId, onNavigate, profile, onLo
 
   return (
     <div className="app-shell">
-      {menuOpen && <button type="button" className="mobile-scrim" aria-label="Fechar menu" onClick={() => setMenuOpen(false)} />}
-      <Sidebar items={navItems} activeId={activeId} onSelect={handleSelect} profile={profile} onLogout={onLogout} open={menuOpen} />
+      {menuOpen && (
+        <button type="button" className="mobile-scrim" aria-label="Fechar menu" onClick={() => setMenuOpen(false)} />
+      )}
+      <Sidebar
+        items={navItems}
+        activeId={activeId}
+        onSelect={handleSelect}
+        profile={profile}
+        onLogout={onLogout}
+        open={menuOpen}
+      />
       <div className="main-shell">
-        <Topbar sectionLabel={active?.label} userName={profile.name} menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} />
+        <Topbar
+          sectionLabel={active?.label}
+          userName={profile.name}
+          menuOpen={menuOpen}
+          onOpenMenu={() => setMenuOpen(true)}
+        />
         <main className="content">
           {children}
           <footer className="page-foot">

@@ -1,9 +1,8 @@
 /* Chamados: cards de resumo, filtros e tabela. */
 
-
 .stats {
   display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 15px;
   margin-top: 28px;
 }
@@ -29,15 +28,15 @@
   font-weight: 500;
 }
 
-.stat-card>div>strong {
+.stat-card > div > strong {
   display: block;
   margin-top: 13px;
   color: #171b2e;
   font: 700 29px/1 var(--font-sans);
-  letter-spacing: -.7px;
+  letter-spacing: -0.7px;
 }
 
-.stat-card>small {
+.stat-card > small {
   display: block;
   margin-top: 12px;
   color: #6d7079;
@@ -112,7 +111,8 @@
   gap: 8px;
 }
 
-.search, .select-wrap {
+.search,
+.select-wrap {
   position: relative;
   display: flex;
   align-items: center;
@@ -126,7 +126,8 @@
   width: 218px;
 }
 
-.search>span, .select-wrap>span {
+.search > span,
+.select-wrap > span {
   position: absolute;
   left: 11px;
   color: #6a6d77;
@@ -134,7 +135,8 @@
   pointer-events: none;
 }
 
-.search input, .select-wrap select {
+.search input,
+.select-wrap select {
   width: 100%;
   height: 100%;
   border: 0;
@@ -183,7 +185,7 @@ th {
   color: #6b6f77;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -211,7 +213,8 @@ tbody tr:not(:has(.empty-state)) {
   cursor: pointer;
 }
 
-.ticket-title, .requester {
+.ticket-title,
+.requester {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -282,7 +285,7 @@ tbody tr:not(:has(.empty-state)) {
   text-align: center;
 }
 
-.empty-state>span {
+.empty-state > span {
   display: grid;
   width: 42px;
   height: 42px;
@@ -334,9 +337,9 @@ tbody tr:not(:has(.empty-state)) {
   margin-left: auto;
 }
 
-@media (max-width:1100px) {
+@media (max-width: 1100px) {
   .stats {
-    grid-template-columns: repeat(2,minmax(0,1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .panel-head {
@@ -357,7 +360,7 @@ tbody tr:not(:has(.empty-state)) {
   }
 }
 
-@media (max-width:560px) {
+@media (max-width: 560px) {
   .stats {
     gap: 10px;
     margin-top: 20px;
@@ -368,7 +371,7 @@ tbody tr:not(:has(.empty-state)) {
     padding: 15px;
   }
 
-  .stat-card>div>strong {
+  .stat-card > div > strong {
     font-size: 25px;
   }
 
@@ -387,7 +390,8 @@ tbody tr:not(:has(.empty-state)) {
     flex-direction: column;
   }
 
-  .search, .select-wrap {
+  .search,
+  .select-wrap {
     flex: none;
     width: 100%;
     height: 38px;

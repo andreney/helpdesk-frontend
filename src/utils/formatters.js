@@ -45,7 +45,11 @@ export function getInitials(name) {
 }
 
 export function getFirstName(name) {
-  return String(name ?? '').trim().split(/\s+/)[0] || '';
+  return (
+    String(name ?? '')
+      .trim()
+      .split(/\s+/)[0] || ''
+  );
 }
 
 export function getGreeting(date = new Date()) {

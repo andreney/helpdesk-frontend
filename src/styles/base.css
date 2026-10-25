@@ -24,7 +24,10 @@ body {
   min-height: 100vh;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font: inherit;
 }
 
@@ -34,10 +37,13 @@ button {
 
 button:disabled {
   cursor: not-allowed;
-  opacity: .6;
+  opacity: 0.6;
 }
 
-button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
   outline: 3px solid #c7d2fe;
   outline-offset: 2px;
 }
@@ -52,7 +58,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   align-items: center;
   gap: 11px;
   font: 700 19px var(--font-sans);
-  letter-spacing: -.7px;
+  letter-spacing: -0.7px;
   color: #161c35;
 }
 
@@ -97,7 +103,9 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   font-weight: 600;
 }
 
-.stack input, .stack select, .stack textarea {
+.stack input,
+.stack select,
+.stack textarea {
   width: 100%;
   border: 1px solid #e1e4eb;
   border-radius: 10px;
@@ -106,15 +114,20 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   color: #242a3a;
   font-size: 13px;
   outline: 0;
-  transition: border .16s,box-shadow .16s;
+  transition:
+    border 0.16s,
+    box-shadow 0.16s;
 }
 
-.stack input:focus, .stack select:focus, .stack textarea:focus {
+.stack input:focus,
+.stack select:focus,
+.stack textarea:focus {
   border-color: #a5a0f8;
   box-shadow: 0 0 0 3px #eeedff;
 }
 
-.stack input::placeholder, .stack textarea::placeholder {
+.stack input::placeholder,
+.stack textarea::placeholder {
   color: #6c7078;
 }
 
@@ -136,7 +149,9 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   border-radius: 10px;
   font-size: 13px;
   font-weight: 700;
-  transition: background .16s,border .16s;
+  transition:
+    background 0.16s,
+    border 0.16s;
 }
 
 .button-primary {
@@ -182,7 +197,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   color: #5148cb;
 }
 
-.button-outline:hover, .button-quiet:hover {
+.button-outline:hover,
+.button-quiet:hover {
   background: #f5f5ff;
 }
 
@@ -308,10 +324,12 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }

@@ -1,9 +1,8 @@
 /* Tela de login. */
 
-
 .login-layout {
   display: grid;
-  grid-template-columns: 1fr .92fr;
+  grid-template-columns: 1fr 0.92fr;
   min-height: 100vh;
   background: #fff;
 }
@@ -15,7 +14,7 @@
 }
 
 .login-box {
-  width: min(100%,410px);
+  width: min(100%, 410px);
 }
 
 .login-heading {
@@ -27,7 +26,7 @@
   color: var(--color-primary);
   font-weight: 700;
   font-size: 13px;
-  letter-spacing: .11em;
+  letter-spacing: 0.11em;
 }
 
 .login-heading h1 {
@@ -37,7 +36,7 @@
   color: #171b2e;
 }
 
-.login-heading>p:last-child {
+.login-heading > p:last-child {
   margin: 0;
   color: #696f7e;
   font-size: 14px;
@@ -131,7 +130,7 @@
   background: #36cc91;
 }
 
-@media (max-width:800px) {
+@media (max-width: 800px) {
   .login-layout {
     grid-template-columns: 1fr;
   }

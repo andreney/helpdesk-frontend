@@ -34,20 +34,20 @@ npm run dev              # http://localhost:5173
 
 Em desenvolvimento, as chamadas a `/api` passam pelo proxy do Vite (veja `vite.config.js`), evitando CORS.
 
-| Script                 | O que faz                      |
-| ---------------------- | ------------------------------ |
-| `npm run dev`          | Servidor de desenvolvimento    |
-| `npm run build`        | Build de produção em `dist/`   |
-| `npm run preview`      | Serve o build localmente       |
-| `npm run lint`         | Análise estática (ESLint)      |
-| `npm run format`       | Formata o código (Prettier)    |
-| `npm test`             | Testes unitários (Vitest)      |
+| Script            | O que faz                    |
+| ----------------- | ---------------------------- |
+| `npm run dev`     | Servidor de desenvolvimento  |
+| `npm run build`   | Build de produção em `dist/` |
+| `npm run preview` | Serve o build localmente     |
+| `npm run lint`    | Análise estática (ESLint)    |
+| `npm run format`  | Formata o código (Prettier)  |
+| `npm test`        | Testes unitários (Vitest)    |
 
 ### Variáveis de ambiente
 
-| Variável            | Padrão | Descrição                                  |
-| ------------------- | ------ | ------------------------------------------ |
-| `VITE_API_BASE_URL` | `/api/v1` | URL base da API (sem barra final)       |
+| Variável            | Padrão    | Descrição                         |
+| ------------------- | --------- | --------------------------------- |
+| `VITE_API_BASE_URL` | `/api/v1` | URL base da API (sem barra final) |
 
 ## Estrutura
 
@@ -75,16 +75,16 @@ Regras de dependência: `features` usam `components`, `services` e `utils`; `com
 
 Rotas relativas a `VITE_API_BASE_URL` (`/api/v1`).
 
-| Método | Rota                       | Uso                                  |
-| ------ | -------------------------- | ------------------------------------ |
-| POST   | `/login`                   | `{ email, password }` → `{ token, user }` |
-| POST   | `/logout`                  | Encerra o token                      |
-| GET    | `/categories`              | `{ data: [{ id, name, description }] }` (só ativas) |
-| GET    | `/tickets`                 | `{ data: [...] }`                    |
-| GET    | `/tickets/:id`             | Detalhe com `comments`               |
-| POST   | `/tickets`                 | `{ category_id, title, description, priority }` |
-| POST   | `/tickets/:id/comments`    | `{ comment }`                        |
-| PATCH  | `/tickets/:id/status`      | `{ status }`                         |
+| Método | Rota                    | Uso                                                 |
+| ------ | ----------------------- | --------------------------------------------------- |
+| POST   | `/login`                | `{ email, password }` → `{ token, user }`           |
+| POST   | `/logout`               | Encerra o token                                     |
+| GET    | `/categories`           | `{ data: [{ id, name, description }] }` (só ativas) |
+| GET    | `/tickets`              | `{ data: [...] }`                                   |
+| GET    | `/tickets/:id`          | Detalhe com `comments`                              |
+| POST   | `/tickets`              | `{ category_id, title, description, priority }`     |
+| POST   | `/tickets/:id/comments` | `{ comment }`                                       |
+| PATCH  | `/tickets/:id/status`   | `{ status }`                                        |
 
 Status: `OPEN → IN_PROGRESS → WAITING/CLOSED`. Prioridades: `LOW`, `MEDIUM`, `HIGH`, `URGENT`.
 Erros de validação (`{ errors: { campo: [msg] } }`) e `{ message }` são exibidos ao usuário.

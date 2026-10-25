@@ -19,7 +19,14 @@ export default function Dialog({ labelledBy, onClose, scrimClassName, className,
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <section ref={dialogRef} className={className} role="dialog" aria-modal="true" aria-labelledby={labelledBy} tabIndex={-1}>
+      <section
+        ref={dialogRef}
+        className={className}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={labelledBy}
+        tabIndex={-1}
+      >
         {children}
       </section>
     </div>,

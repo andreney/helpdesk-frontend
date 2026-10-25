@@ -3,8 +3,20 @@ import { ALL_STATUSES, STATUS, STATUS_TRANSITIONS, TICKET_SCOPES } from '@/featu
 import { filterTickets, getTicketStats } from '@/features/tickets/ticketSelectors';
 
 const tickets = [
-  { id: 1, title: 'Não consigo acessar o e-mail', status: STATUS.OPEN, user: { id: 10, name: 'Ana' }, category: { name: 'Acesso' } },
-  { id: 2, title: 'Impressora parada', status: STATUS.IN_PROGRESS, user: { id: 11, name: 'Bruno' }, category: { name: 'Hardware' } },
+  {
+    id: 1,
+    title: 'Não consigo acessar o e-mail',
+    status: STATUS.OPEN,
+    user: { id: 10, name: 'Ana' },
+    category: { name: 'Acesso' },
+  },
+  {
+    id: 2,
+    title: 'Impressora parada',
+    status: STATUS.IN_PROGRESS,
+    user: { id: 11, name: 'Bruno' },
+    category: { name: 'Hardware' },
+  },
   { id: 3, title: 'Solicitar licença', status: STATUS.CLOSED, user: { id: 10, name: 'Ana' }, category: null },
   { id: 4, title: 'VPN lenta', status: STATUS.WAITING, user: { id: 12, name: 'Carla' }, category: { name: 'Rede' } },
 ];
@@ -33,7 +45,9 @@ describe('filterTickets', () => {
   });
 
   it('combina escopo, status e busca', () => {
-    expect(ids(filterTickets(tickets, { scope: TICKET_SCOPES.MINE, userId: 10, status: STATUS.OPEN, query: 'e-mail' }))).toEqual([1]);
+    expect(
+      ids(filterTickets(tickets, { scope: TICKET_SCOPES.MINE, userId: 10, status: STATUS.OPEN, query: 'e-mail' })),
+    ).toEqual([1]);
   });
 });
 

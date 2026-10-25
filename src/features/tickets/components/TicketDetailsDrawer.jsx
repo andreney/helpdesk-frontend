@@ -85,7 +85,12 @@ export default function TicketDetailsDrawer({ ticket, canManage, onClose, onComm
             <strong>Próxima etapa</strong>
             <div>
               {transitions.map((status) => (
-                <Button key={status} variant="outline" disabled={busy} onClick={() => run(() => onStatusChange(status))}>
+                <Button
+                  key={status}
+                  variant="outline"
+                  disabled={busy}
+                  onClick={() => run(() => onStatusChange(status))}
+                >
                   {STATUS_ACTION_LABELS[status]}
                 </Button>
               ))}

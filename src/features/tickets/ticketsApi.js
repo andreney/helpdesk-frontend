@@ -5,7 +5,13 @@ import { ALL_STATUSES, PAGE_SIZE } from './constants';
 const unwrap = (result) => result?.data ?? result;
 
 /** Monta a query string da listagem, omitindo os filtros vazios. */
-export function buildListQuery({ page = 1, perPage = PAGE_SIZE, status = ALL_STATUSES, search = '', mine = false } = {}) {
+export function buildListQuery({
+  page = 1,
+  perPage = PAGE_SIZE,
+  status = ALL_STATUSES,
+  search = '',
+  mine = false,
+} = {}) {
   const params = new URLSearchParams({ page: String(page), per_page: String(perPage) });
   if (status && status !== ALL_STATUSES) params.set('status', status);
   if (search) params.set('search', search);

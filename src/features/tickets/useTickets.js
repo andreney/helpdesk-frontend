@@ -1,79 +1,89 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useOnRefocus } from '@/hooks/useOnRefocus';
 import { getErrorMessage } from '@/services/httpClient';
+import { PAGE_SIZE } from './constants';
 import * as ticketsApi from './ticketsApi';
 
-// Ao voltar para a aba, atualiza a lista se ela estiver "velha" (também revalida a sessão).
+// Ao voltar para a aba, atualiza a lista se estiver "velha" (também revalida a sessão).
 const STALE_AFTER_MS = 60_000;
 
+const EMPTY_META = { currentPage: 1, lastPage: 1, perPage: PAGE_SIZE, total: 0, from: 0, to: 0 };
+
 /**
- * Estado e operações dos chamados.
- * Carrega a lista, cancela requisições obsoletas e mantém a lista local sincronizada
- * após criar chamado ou mudar status (sem recarregar tudo a cada ação).
+ * Uma página de chamados, conforme a busca/filtros/página recebidos.
+ * Recarrega sozinho quando eles mudam, cancela requisições obsoletas e
+ * recarrega a lista após criar um chamado ou mudar seu status.
  */
-export function useTickets() {
+export function useTickets({ page, perPage, status, search, mine }) {
   const [tickets, setTickets] = useState([]);
+  const [meta, setMeta] = useState(EMPTY_META);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [lastUpdated, setLastUpdated] = useState(null);
   const controllerRef = useRef(null);
   const lastFetchRef = useRef(0);
 
-  const refresh = useCallback(async ({ silent = false } = {}) => {
-    // Atualização em segundo plano nunca atropela uma carga em andamento.
-    if (silent && controllerRef.current) return;
+  // `query` só muda de identidade quando algum valor muda (evita recarregar a cada render).
+  const queryKey = JSON.stringify([page, perPage, status, search, mine]);
+  const query = useMemo(() => {
+    const [nextPage, nextPerPage, nextStatus, nextSearch, nextMine] = JSON.parse(queryKey);
+    return { page: nextPage, perPage: nextPerPage, status: nextStatus, search: nextSearch, mine: nextMine };
+  }, [queryKey]);
 
-    controllerRef.current?.abort();
-    const controller = new AbortController();
-    controllerRef.current = controller;
+  const load = useCallback(
+    async ({ background = false } = {}) => {
+      // Atualização em segundo plano nunca atropela uma carga em andamento.
+      if (background && controllerRef.current) return;
 
-    if (!silent) {
-      setLoading(true);
-      setError('');
-    }
+      controllerRef.current?.abort();
+      const controller = new AbortController();
+      controllerRef.current = controller;
 
-    try {
-      const data = await ticketsApi.list({ signal: controller.signal });
-      const now = new Date();
-      setTickets(data);
-      setLastUpdated(now);
-      lastFetchRef.current = now.getTime();
-    } catch (issue) {
-      if (issue.name === 'AbortError') return;
-      if (!silent) setError(getErrorMessage(issue));
-    } finally {
-      if (controllerRef.current === controller) {
-        controllerRef.current = null;
-        if (!silent) setLoading(false);
+      if (!background) {
+        setLoading(true);
+        setError('');
       }
-    }
-  }, []);
+
+      try {
+        const result = await ticketsApi.list({ ...query, signal: controller.signal });
+        const now = new Date();
+        setTickets(result.items);
+        setMeta(result.meta);
+        setLastUpdated(now);
+        lastFetchRef.current = now.getTime();
+      } catch (issue) {
+        if (issue.name === 'AbortError') return;
+        if (!background) setError(getErrorMessage(issue));
+      } finally {
+        if (controllerRef.current === controller) {
+          controllerRef.current = null;
+          if (!background) setLoading(false);
+        }
+      }
+    },
+    [query],
+  );
 
   useEffect(() => {
-    refresh();
-    // O controller é trocado a cada carga; no cleanup queremos justamente o mais recente.
+    load();
     return () => controllerRef.current?.abort();
-  }, [refresh]);
+  }, [load]);
 
-  useEffect(() => {
-    function refreshIfStale() {
-      if (document.visibilityState !== 'visible') return;
+  useOnRefocus(
+    useCallback(() => {
       if (Date.now() - lastFetchRef.current < STALE_AFTER_MS) return;
-      refresh({ silent: true });
-    }
+      load({ background: true });
+    }, [load]),
+  );
 
-    document.addEventListener('visibilitychange', refreshIfStale);
-    window.addEventListener('focus', refreshIfStale);
-    return () => {
-      document.removeEventListener('visibilitychange', refreshIfStale);
-      window.removeEventListener('focus', refreshIfStale);
-    };
-  }, [refresh]);
-
-  const createTicket = useCallback(async (payload) => {
-    const ticket = await ticketsApi.create(payload);
-    setTickets((current) => [ticket, ...current]);
-    return ticket;
-  }, []);
+  const createTicket = useCallback(
+    async (payload) => {
+      const ticket = await ticketsApi.create(payload);
+      load();
+      return ticket;
+    },
+    [load],
+  );
 
   const loadTicket = useCallback((id) => ticketsApi.get(id), []);
 
@@ -82,12 +92,15 @@ export function useTickets() {
     return ticketsApi.get(ticketId);
   }, []);
 
-  const changeStatus = useCallback(async (ticketId, status) => {
-    await ticketsApi.updateStatus(ticketId, status);
-    const updated = await ticketsApi.get(ticketId);
-    setTickets((current) => current.map((ticket) => (ticket.id === updated.id ? { ...ticket, ...updated } : ticket)));
-    return updated;
-  }, []);
+  const changeStatus = useCallback(
+    async (ticketId, nextStatus) => {
+      await ticketsApi.updateStatus(ticketId, nextStatus);
+      const updated = await ticketsApi.get(ticketId);
+      load();
+      return updated;
+    },
+    [load],
+  );
 
-  return { tickets, loading, error, lastUpdated, refresh, createTicket, loadTicket, addComment, changeStatus };
+  return { tickets, meta, loading, error, lastUpdated, createTicket, loadTicket, addComment, changeStatus };
 }

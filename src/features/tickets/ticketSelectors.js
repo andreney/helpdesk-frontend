@@ -1,36 +1,19 @@
-import { ALL_STATUSES, STATUS, TICKET_SCOPES } from './constants';
+import { STATUS } from './constants';
 
-const LOCALE = 'pt-BR';
+const EMPTY_STATS = Object.freeze({ total: null, open: null, inProgress: null, closed: null });
 
-function normalize(value) {
-  return String(value ?? '').toLocaleLowerCase(LOCALE);
-}
+/**
+ * Converte o resumo da API (`GET /tickets/summary`) nos números dos cards.
+ * Sem resumo (ainda carregando ou falhou), os valores são `null` e os cards mostram "—".
+ */
+export function toStats(summary) {
+  const byStatus = summary?.by_status;
+  if (!byStatus) return EMPTY_STATS;
 
-/** Aplica escopo ("meus chamados"), filtro de status e busca textual. */
-export function filterTickets(tickets, { scope = TICKET_SCOPES.ALL, userId, status = ALL_STATUSES, query = '' } = {}) {
-  const text = normalize(query).trim();
-
-  return tickets.filter((ticket) => {
-    if (scope === TICKET_SCOPES.MINE && ticket.user?.id !== userId) return false;
-    if (status !== ALL_STATUSES && ticket.status !== status) return false;
-    if (!text) return true;
-
-    return [ticket.title, ticket.category?.name, ticket.user?.name, `#${ticket.id}`].some((value) =>
-      normalize(value).includes(text),
-    );
-  });
-}
-
-/** Contagens exibidas nos cards de resumo. */
-export function getTicketStats(tickets) {
-  return tickets.reduce(
-    (stats, ticket) => {
-      stats.total += 1;
-      if (ticket.status === STATUS.OPEN) stats.open += 1;
-      if (ticket.status === STATUS.IN_PROGRESS) stats.inProgress += 1;
-      if (ticket.status === STATUS.CLOSED) stats.closed += 1;
-      return stats;
-    },
-    { total: 0, open: 0, inProgress: 0, closed: 0 },
-  );
+  return {
+    total: summary.total ?? 0,
+    open: byStatus[STATUS.OPEN] ?? 0,
+    inProgress: byStatus[STATUS.IN_PROGRESS] ?? 0,
+    closed: byStatus[STATUS.CLOSED] ?? 0,
+  };
 }

@@ -5,7 +5,7 @@ function StatCard({ label, value, icon, tone, note }) {
     <article className="stat-card">
       <div>
         <p>{label}</p>
-        <strong>{value}</strong>
+        <strong>{value ?? '—'}</strong>
       </div>
       <span className={`stat-icon stat-${tone}`}>
         <Icon name={icon} />

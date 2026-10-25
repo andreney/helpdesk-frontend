@@ -13,7 +13,8 @@ Interface web de uma central de atendimento (helpdesk): login, painel com resumo
 - **Arquitetura por feature** (`auth`, `tickets`), com camada de serviços isolada e componentes de UI reutilizáveis.
 - **Cliente HTTP único**: injeta o token, normaliza erros em `ApiError`, trata falha de rede e encerra a sessão em `401/419`.
 - **Sessão robusta**: `AuthContext`, expiração automática de JWT, storage protegido contra indisponibilidade.
-- **Dados sem desperdício**: requisições canceláveis (`AbortController`), respostas obsoletas descartadas, lista atualizada localmente após ações e revalidada ao voltar para a aba.
+- **Paginação e filtros no servidor**: 15 chamados por página, busca (com debounce), status e "meus chamados" enviados à API, e cards de resumo vindos de `/tickets/summary`, então os totais valem para todos os chamados e não só para a página aberta.
+- **Dados sem desperdício**: requisições canceláveis (`AbortController`), respostas obsoletas descartadas, lista e resumo recarregados após criar chamado ou mudar status, e revalidação ao voltar para a aba.
 - **Acessibilidade**: diálogos com foco preso/restaurado, `Esc`, `aria-*`, tabela semântica, navegação completa por teclado, contraste mínimo 4.5:1 e `prefers-reduced-motion`.
 - **Responsivo**: sidebar em gaveta no mobile (sem foco enquanto fechada).
 - **Qualidade**: ESLint (React, Hooks e jsx-a11y), Prettier, testes unitários com Vitest e CI no GitHub Actions.
@@ -34,20 +35,20 @@ npm run dev              # http://localhost:5173
 
 Em desenvolvimento, as chamadas a `/api` passam pelo proxy do Vite (veja `vite.config.js`), evitando CORS.
 
-| Script            | O que faz                    |
-| ----------------- | ---------------------------- |
-| `npm run dev`     | Servidor de desenvolvimento  |
-| `npm run build`   | Build de produção em `dist/` |
-| `npm run preview` | Serve o build localmente     |
-| `npm run lint`    | Análise estática (ESLint)    |
-| `npm run format`  | Formata o código (Prettier)  |
-| `npm test`        | Testes unitários (Vitest)    |
+| Script                 | O que faz                      |
+| ---------------------- | ------------------------------ |
+| `npm run dev`          | Servidor de desenvolvimento    |
+| `npm run build`        | Build de produção em `dist/`   |
+| `npm run preview`      | Serve o build localmente       |
+| `npm run lint`         | Análise estática (ESLint)      |
+| `npm run format`       | Formata o código (Prettier)    |
+| `npm test`             | Testes unitários (Vitest)      |
 
 ### Variáveis de ambiente
 
-| Variável            | Padrão    | Descrição                         |
-| ------------------- | --------- | --------------------------------- |
-| `VITE_API_BASE_URL` | `/api/v1` | URL base da API (sem barra final) |
+| Variável            | Padrão | Descrição                                  |
+| ------------------- | ------ | ------------------------------------------ |
+| `VITE_API_BASE_URL` | `/api/v1` | URL base da API (sem barra final)       |
 
 ## Estrutura
 
@@ -75,16 +76,17 @@ Regras de dependência: `features` usam `components`, `services` e `utils`; `com
 
 Rotas relativas a `VITE_API_BASE_URL` (`/api/v1`).
 
-| Método | Rota                    | Uso                                                 |
-| ------ | ----------------------- | --------------------------------------------------- |
-| POST   | `/login`                | `{ email, password }` → `{ token, user }`           |
-| POST   | `/logout`               | Encerra o token                                     |
-| GET    | `/categories`           | `{ data: [{ id, name, description }] }` (só ativas) |
-| GET    | `/tickets`              | `{ data: [...] }`                                   |
-| GET    | `/tickets/:id`          | Detalhe com `comments`                              |
-| POST   | `/tickets`              | `{ category_id, title, description, priority }`     |
-| POST   | `/tickets/:id/comments` | `{ comment }`                                       |
-| PATCH  | `/tickets/:id/status`   | `{ status }`                                        |
+| Método | Rota                       | Uso                                  |
+| ------ | -------------------------- | ------------------------------------ |
+| POST   | `/login`                   | `{ email, password }` → `{ token, user }` |
+| POST   | `/logout`                  | Encerra o token                      |
+| GET    | `/categories`              | `{ data: [{ id, name, description }] }` (só ativas) |
+| GET    | `/tickets`                 | `?page&per_page&status&search&mine=1` → `{ data, meta }` |
+| GET    | `/tickets/summary`         | `?mine=1` → `{ data: { total, by_status } }` |
+| GET    | `/tickets/:id`             | Detalhe com `comments`               |
+| POST   | `/tickets`                 | `{ category_id, title, description, priority }` |
+| POST   | `/tickets/:id/comments`    | `{ comment }`                        |
+| PATCH  | `/tickets/:id/status`      | `{ status }`                         |
 
 Status: `OPEN → IN_PROGRESS → WAITING/CLOSED`. Prioridades: `LOW`, `MEDIUM`, `HIGH`, `URGENT`.
 Erros de validação (`{ errors: { campo: [msg] } }`) e `{ message }` são exibidos ao usuário.
@@ -93,10 +95,9 @@ Erros de validação (`{ errors: { campo: [msg] } }`) e `{ message }` são exibi
 
 - **Token em `sessionStorage`**: simples e encerra ao fechar a aba, mas é legível por JavaScript (risco em caso de XSS). Em produção, o ideal é cookie `HttpOnly` + `SameSite` emitido pela API, junto a uma CSP restritiva.
 - **Sem router**: há uma única área autenticada; a navegação lateral só alterna o escopo da lista. `react-router` entra quando surgirem telas com URL própria.
-- **Filtros no cliente**: adequado para listas pequenas. Com volume maior, mover busca/filtro/paginação para a API.
+- **Filtros e paginação no servidor**: o navegador nunca carrega a lista inteira; busca, status e escopo são parâmetros da API, e a página volta a 1 quando um filtro muda.
 
 ## Próximos passos
 
-- Paginação e filtros no servidor.
 - Testes de componentes (Testing Library) e E2E (Playwright).
 - Migração para TypeScript.

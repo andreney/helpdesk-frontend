@@ -1,15 +1,36 @@
-import { useMemo, useState } from 'react';
-import { ALL_STATUSES } from './constants';
-import { filterTickets } from './ticketSelectors';
+import { useState } from 'react';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { ALL_STATUSES, PAGE_SIZE } from './constants';
 
-/** Estado dos filtros (busca e status) + lista filtrada. O escopo vem de fora (navegação). */
-export function useTicketFilters(tickets, { scope, userId }) {
-  const [query, setQuery] = useState('');
+const SEARCH_DEBOUNCE_MS = 300;
+
+/**
+ * Busca, filtro de status e página. O escopo ("meus chamados") vem de fora (navegação).
+ * `params` é o que a API recebe; a busca só é enviada depois que o usuário para de digitar.
+ */
+export function useTicketFilters({ mine }) {
+  const [searchInput, setSearchInput] = useState('');
   const [status, setStatus] = useState(ALL_STATUSES);
+  const search = useDebouncedValue(searchInput.trim(), SEARCH_DEBOUNCE_MS);
 
-  const scoped = useMemo(() => filterTickets(tickets, { scope, userId }), [tickets, scope, userId]);
-  const filtered = useMemo(() => filterTickets(scoped, { status, query }), [scoped, status, query]);
-  const hasActiveFilters = status !== ALL_STATUSES || query.trim() !== '';
+  // A página pertence ao conjunto de filtros em que foi escolhida: mudou o filtro, volta à página 1.
+  // Reiniciar durante a renderização (e não só comparar chaves) evita que uma página antiga
+  // "ressuscite" quando o usuário volta a uma combinação de filtros anterior.
+  const filtersKey = JSON.stringify([status, search, mine]);
+  const [pageState, setPageState] = useState({ key: filtersKey, page: 1 });
+  if (pageState.key !== filtersKey) setPageState({ key: filtersKey, page: 1 });
 
-  return { query, setQuery, status, setStatus, scoped, filtered, hasActiveFilters };
+  const page = pageState.key === filtersKey ? pageState.page : 1;
+  const setPage = (nextPage) => setPageState({ key: filtersKey, page: nextPage });
+
+  return {
+    searchInput,
+    setSearchInput,
+    status,
+    setStatus,
+    page,
+    setPage,
+    hasActiveFilters: status !== ALL_STATUSES || searchInput.trim() !== '',
+    params: { page, perPage: PAGE_SIZE, status, search, mine },
+  };
 }

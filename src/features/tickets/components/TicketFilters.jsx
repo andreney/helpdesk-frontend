@@ -1,5 +1,5 @@
 import Icon from '@/components/ui/Icon';
-import { ALL_STATUSES, STATUS_META } from '../constants';
+import { ALL_STATUSES, SEARCH_MAX_LENGTH, STATUS_META } from '../constants';
 
 export default function TicketFilters({ query, onQueryChange, status, onStatusChange }) {
   return (
@@ -12,6 +12,7 @@ export default function TicketFilters({ query, onQueryChange, status, onStatusCh
           type="search"
           aria-label="Buscar chamados"
           placeholder="Buscar por chamado…"
+          maxLength={SEARCH_MAX_LENGTH}
           value={query}
           onChange={(event) => onQueryChange(event.target.value)}
         />

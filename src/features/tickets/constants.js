@@ -43,3 +43,8 @@ export const PRIORITY_META = {
 };
 
 export const TITLE_MAX_LENGTH = 150;
+
+/** Chamados por página na listagem (a API aceita de 1 a 100). */
+export const PAGE_SIZE = 15;
+
+export const SEARCH_MAX_LENGTH = 100;

@@ -29,8 +29,9 @@ function EmptyState({ filtered, onCreate }) {
  * Tabela de chamados.
  * `isInitialLoading`: primeira carga (ainda não há nada para mostrar).
  * `filtered`: há busca/filtro ativo (muda a mensagem de "vazio").
+ * `busy`: uma nova página está sendo carregada (a anterior continua visível, esmaecida).
  */
-export default function TicketList({ tickets, isInitialLoading, filtered, onOpen, onCreate }) {
+export default function TicketList({ tickets, isInitialLoading, filtered, busy = false, onOpen, onCreate }) {
   let body;
   if (isInitialLoading) {
     body = (
@@ -53,7 +54,7 @@ export default function TicketList({ tickets, isInitialLoading, filtered, onOpen
   }
 
   return (
-    <div className="table-scroll">
+    <div className="table-scroll" aria-busy={busy}>
       <table>
         <caption className="sr-only">Lista de chamados</caption>
         <thead>

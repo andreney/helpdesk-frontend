@@ -13,7 +13,7 @@ export function toStats(summary) {
   return {
     total: summary.total ?? 0,
     open: byStatus[STATUS.OPEN] ?? 0,
-    inProgress: byStatus[STATUS.IN_PROGRESS] ?? 0,
+    inProgress: (byStatus[STATUS.IN_PROGRESS] ?? 0) + (byStatus[STATUS.WAITING] ?? 0),
     closed: byStatus[STATUS.CLOSED] ?? 0,
   };
 }

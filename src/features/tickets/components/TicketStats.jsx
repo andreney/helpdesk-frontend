@@ -20,7 +20,13 @@ export default function TicketStats({ stats }) {
     <section className="stats" aria-label="Resumo dos chamados">
       <StatCard label="Total de chamados" value={stats.total} icon="list" tone="indigo" note="na sua fila" />
       <StatCard label="Abertos" value={stats.open} icon="plus" tone="blue" note="aguardando triagem" />
-      <StatCard label="Em atendimento" value={stats.inProgress} icon="clock" tone="amber" note="sendo resolvidos" />
+      <StatCard
+        label="Em andamento"
+        value={stats.inProgress}
+        icon="clock"
+        tone="amber"
+        note="em atendimento ou aguardando"
+      />
       <StatCard label="Concluídos" value={stats.closed} icon="check" tone="green" note="finalizados" />
     </section>
   );

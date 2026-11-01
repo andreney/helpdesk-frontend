@@ -26,12 +26,13 @@ export const STATUS_TRANSITIONS = {
   [STATUS.CLOSED]: [],
 };
 
-/** Texto do botão que leva o chamado ao status indicado. */
-export const STATUS_ACTION_LABELS = {
-  [STATUS.IN_PROGRESS]: 'Iniciar atendimento',
-  [STATUS.WAITING]: 'Aguardar retorno',
-  [STATUS.CLOSED]: 'Concluir chamado',
-};
+/** Texto do botão que leva o chamado do status atual ao de destino. */
+export function getStatusActionLabel(from, to) {
+  if (to === STATUS.IN_PROGRESS) return from === STATUS.WAITING ? 'Retomar atendimento' : 'Iniciar atendimento';
+  if (to === STATUS.WAITING) return 'Aguardar retorno';
+  if (to === STATUS.CLOSED) return 'Concluir chamado';
+  return STATUS_META[to]?.label ?? to;
+}
 
 export const PRIORITY = Object.freeze({ LOW: 'LOW', MEDIUM: 'MEDIUM', HIGH: 'HIGH', URGENT: 'URGENT' });
 

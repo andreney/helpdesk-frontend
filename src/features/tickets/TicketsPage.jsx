@@ -81,7 +81,7 @@ export default function TicketsPage({ scope }) {
       <div className="page-heading">
         <div>
           <p className="welcome">
-            {getGreeting()}, {getFirstName(user?.name) || 'tudo bem'}?
+            {getGreeting()}, {getFirstName(user?.name) || 'tudo bem'}!
           </p>
           <h1>Central de atendimento</h1>
           <p>Acompanhe as solicitações e mantenha tudo em movimento.</p>

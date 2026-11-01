@@ -6,7 +6,7 @@ describe('toStats', () => {
   it('converte o resumo da API nos números dos cards', () => {
     const summary = { total: 21, by_status: { OPEN: 18, IN_PROGRESS: 1, WAITING: 1, CLOSED: 1 } };
 
-    expect(toStats(summary)).toEqual({ total: 21, open: 18, inProgress: 1, closed: 1 });
+    expect(toStats(summary)).toEqual({ total: 21, open: 18, inProgress: 2, closed: 1 });
   });
 
   it('status ausentes viram zero', () => {

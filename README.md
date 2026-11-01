@@ -6,7 +6,33 @@ Interface web de uma central de atendimento (helpdesk): login, painel com resumo
 ![Vite](https://img.shields.io/badge/Vite-6-646cff?logo=vite&logoColor=white)
 ![Vitest](https://img.shields.io/badge/tests-Vitest-6e9f18?logo=vitest&logoColor=white)
 
-![Painel de chamados](docs/dashboard.png)
+## 📸 Telas
+
+|                    Login                     |                               Painel de chamados                               |
+| :------------------------------------------: | :----------------------------------------------------------------------------: |
+| ![Tela de login](docs/screenshots/login.png) | ![Painel com resumo, filtros e lista paginada](docs/screenshots/dashboard.png) |
+
+|                                   Detalhe do chamado                                   |                                  Novo chamado                                   |
+| :------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| ![Drawer com descrição, próxima etapa e conversa](docs/screenshots/ticket-details.png) | ![Modal de novo chamado com categorias da API](docs/screenshots/new-ticket.png) |
+
+|                     Paginação e filtros                     |                                   Celular                                   |
+| :---------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| ![Segunda página da lista](docs/screenshots/pagination.png) | <img src="docs/screenshots/mobile.png" alt="Painel no celular" width="220"> |
+
+## 🚀 Rodando com a API
+
+Este frontend consome a [Helpdesk API](https://github.com/andreney/helpdesk-api).
+
+1. Suba a API seguindo a seção **Instalação** do README dela (inclui `php artisan migrate --seed`).
+2. Neste projeto: `npm install`, crie o `.env` com `VITE_API_BASE_URL=/api/v1` e rode `npm run dev`.
+3. Entre com uma conta criada pelo seeder (senha `password`, **só para desenvolvimento**):
+
+| Perfil        | E-mail                  |
+| ------------- | ----------------------- |
+| Administrador | `admin@helpdesk.test`   |
+| Agente        | `agente@helpdesk.test`  |
+| Solicitante   | `usuario@helpdesk.test` |
 
 ## Destaques
 

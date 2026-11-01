@@ -5,7 +5,7 @@ import ErrorMessage from '@/components/ui/ErrorMessage';
 import Icon from '@/components/ui/Icon';
 import { getErrorMessage } from '@/services/httpClient';
 import { formatDate } from '@/utils/formatters';
-import { STATUS_ACTION_LABELS, STATUS_TRANSITIONS } from '../constants';
+import { getStatusActionLabel, STATUS_TRANSITIONS } from '../constants';
 import TicketComments from './TicketComments';
 import { PriorityBadge, StatusBadge } from './StatusBadge';
 
@@ -91,7 +91,7 @@ export default function TicketDetailsDrawer({ ticket, canManage, onClose, onComm
                   disabled={busy}
                   onClick={() => run(() => onStatusChange(status))}
                 >
-                  {STATUS_ACTION_LABELS[status]}
+                  {getStatusActionLabel(ticket.status, status)}
                 </Button>
               ))}
             </div>
